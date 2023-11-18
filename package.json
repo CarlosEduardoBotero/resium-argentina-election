@@ -13,7 +13,8 @@
     "cesium": "^1.111.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "resium": "^1.17.2"
+    "resium": "^1.17.2",
+    "zustand": "^4.4.6"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",
