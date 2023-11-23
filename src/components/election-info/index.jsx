@@ -1,20 +1,22 @@
 import React from "react";
-import { useSelectElectionTypeStore } from "../../store/useSelectElectionType";
+import { useElectionInfoStore } from "../../store/useElectionInfoStore";
 import { useQuery } from "react-query";
 import Skeleton from "./skeleton";
 import Error from "./error";
+import PoliticalPartiesList from "../political-parties-list";
 
 const ElectionInfo = () => {
-  const electionType = useSelectElectionTypeStore(
-    (state) => state.electionType
-  );
+  const idEleccion = useElectionInfoStore((state) => state.idEleccion);
+  const idDistrito = useElectionInfoStore((state) => state.idDistrito);
 
   const { data, isLoading, error } = useQuery({
-    queryKey: ["datosTotalizados", { electionType }],
+    queryKey: ["datosTotalizados", { idEleccion, idDistrito }],
     staleTime: Infinity,
     queryFn: async () => {
       const response = await fetch(
-        `https://resultados.mininterior.gob.ar/api/resultado/totalizado?año=2023&recuento=Provisorio&idEleccion=${electionType}&idCargo=1&idDistrito=0`
+        `${
+          import.meta.env.VITE_API_URL
+        }/api/resultado/totalizado?año=2023&recuento=Provisorio&idEleccion=${idEleccion}&idCargo=1&idDistrito=${idDistrito}`
       );
       if (!response.ok) {
         throw new Error("Network response was not ok");
@@ -23,15 +25,8 @@ const ElectionInfo = () => {
 
       return data;
     },
-    enabled: Boolean(electionType),
+    enabled: Boolean(idEleccion),
   });
-
-  const gallery = Object.values(
-    import.meta.glob("../../assets/partidos/*.{png,jpg,jpeg,PNG,JPEG}", {
-      eager: true,
-      as: "url",
-    })
-  );
 
   if (isLoading) return <Skeleton />;
 
@@ -39,9 +34,10 @@ const ElectionInfo = () => {
 
   return (
     <div>
-      <p className="text-2xl my-4 pt-4 border-t border-gray-600">
-        Recuento {data?.Recuento}
+      <p className="text-2xl mt-4 pt-4 border-t border-gray-600">
+        Resultados {data?.Distrito}
       </p>
+      <p className="mb-4 text-gray-500">Recuento {data?.Recuento}</p>
       <div className="grid grid-cols-2 gap-2">
         <div className="border border-gray-600 rounded-sm p-2">
           <p>Electores:</p>
@@ -72,38 +68,10 @@ const ElectionInfo = () => {
           </p>
         </div>
       </div>
-      <h2 className="my-4 text-2xl border-t pt-4 border-gray-600">
-        Agrupaciones
-      </h2>
       <div>
-        {data?.agrupaciones.map((data) => {
-          return (
-            <div
-              className="border border-gray-600 rounded-sm p-2 mb-2 grid grid-cols-[auto_1fr] grid-rows-[auto_1fr] gap-2"
-              style={{ borderColor: data?.color }}
-              key={data?.nombre}
-            >
-              <img
-                src={gallery.find((image) => {
-                  var imageRegex = new RegExp(`${data?.nombre}`, "g");
-                  return imageRegex.test(image);
-                })}
-                height="30px"
-                width="30px"
-                className="w-10 rounded-sm"
-              />
-              <div className="self-center" style={{ color: data?.color }}>
-                {data?.nombre}
-              </div>
-              <div className="col-start-2 flex justify-between ">
-                <p className="text-gray-500">
-                  {Intl.NumberFormat("es-AR").format(data?.votos)} Votos
-                </p>
-                <p className="font-semibold">{data?.porcentaje}%</p>
-              </div>
-            </div>
-          );
-        })}
+        {data?.agrupaciones && (
+          <PoliticalPartiesList agrupaciones={data.agrupaciones} />
+        )}
       </div>
     </div>
   );
