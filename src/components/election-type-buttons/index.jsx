@@ -1,14 +1,10 @@
 import React from "react";
-import { useSelectElectionTypeStore } from "../../store/useSelectElectionType";
+import { useElectionInfoStore } from "../../store/useElectionInfoStore";
 
 const ElectionTypeGroupButtons = () => {
-  const setElectionType = useSelectElectionTypeStore(
-    (state) => state.setElectionType
-  );
+  const setIdEleccion = useElectionInfoStore((state) => state.setIdEleccion);
 
-  const electionType = useSelectElectionTypeStore(
-    (state) => state.electionType
-  );
+  const idEleccion = useElectionInfoStore((state) => state.idEleccion);
 
   const paramsString = window.location.search;
 
@@ -17,42 +13,36 @@ const ElectionTypeGroupButtons = () => {
   return (
     <div className="my-4 flex justify-around">
       <button
-        className={`transition-all duration-1000 ease-in-out font-mono p-2 ${
-          electionType === "1"
-            ? "bg-gradient-to-r from-sky-400 to-sky-200 text-transparent bg-clip-text "
-            : "bg-gradient-to-r from-gray-500 to-gray-500 text-transparent bg-clip-text "
+        className={`text-transparent bg-clip-text font-mono bg-gradient-to-r p-2 from-gray-500 to-gray-500 hover:from-sky-400 hover:to-sky-200 ${
+          idEleccion === "1" ? "from-sky-400 to-sky-200" : ""
         }`}
         onClick={() => {
-          searchParams.set("eleccion", "1");
-          setElectionType("1");
+          searchParams.set("idEleccion", "1");
+          setIdEleccion("1");
           window.history.pushState({}, "", `?${searchParams.toString()}`);
         }}
       >
         PASO
       </button>
       <button
-        className={`transition-all duration-500 ease-in-out font-mono p-2 ${
-          electionType === "2"
-            ? "bg-gradient-to-r from-sky-400 to-sky-200 text-transparent bg-clip-text "
-            : "bg-gradient-to-r from-gray-500 to-gray-500 text-transparent bg-clip-text "
+        className={`text-transparent bg-clip-text font-mono bg-gradient-to-r p-2 from-gray-500 to-gray-500 hover:from-sky-400 hover:to-sky-200 ${
+          idEleccion === "2" ? "from-sky-400 to-sky-200" : ""
         }`}
         onClick={() => {
-          searchParams.set("eleccion", "2");
-          setElectionType("2");
+          searchParams.set("idEleccion", "2");
+          setIdEleccion("2");
           window.history.pushState({}, "", `?${searchParams.toString()}`);
         }}
       >
         GENERALES
       </button>
       <button
-        className={`transition-all duration-500 ease-in-out font-mono p-2 ${
-          electionType === "3"
-            ? "bg-gradient-to-r from-sky-400 to-sky-200 text-transparent bg-clip-text "
-            : "bg-gradient-to-r from-gray-500 to-gray-500 text-transparent bg-clip-text "
+        className={`text-transparent bg-clip-text font-mono bg-gradient-to-r p-2 from-gray-500 to-gray-500 hover:from-sky-400 hover:to-sky-200 ${
+          idEleccion === "3" ? "from-sky-400 to-sky-200" : ""
         }`}
         onClick={() => {
-          searchParams.set("eleccion", "3");
-          setElectionType("3");
+          searchParams.set("idEleccion", "3");
+          setIdEleccion("3");
           window.history.pushState({}, "", `?${searchParams.toString()}`);
         }}
       >
