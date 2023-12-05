@@ -1,4 +1,4 @@
-import React from "react";
+import argentinaFormat from "../../utils/argentinaFormat";
 
 const PoliticalPartyCard = ({ color, nombre, votos, porcentaje }) => {
   const gallery = Object.values(
@@ -27,9 +27,7 @@ const PoliticalPartyCard = ({ color, nombre, votos, porcentaje }) => {
         {nombre}
       </div>
       <div className="col-start-2 flex justify-between ">
-        <p className="text-gray-500">
-          {Intl.NumberFormat("es-AR").format(votos)} Votos
-        </p>
+        <p className="text-gray-500">{argentinaFormat(votos)} Votos</p>
         <p className="font-semibold">{porcentaje}%</p>
       </div>
     </div>
