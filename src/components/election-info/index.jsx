@@ -1,11 +1,11 @@
 import React from "react";
 import { useElectionInfoStore } from "../../store/useElectionInfoStore";
 import { useQuery } from "react-query";
-import Skeleton from "./skeleton";
-import Error from "./error";
+import Skeleton from "./Skeleton";
+import Error from "./Error";
 import PoliticalPartyCard from "../political-party-card";
 import BallotageCandidateCard from "../ballotage-candidate-card";
-import { ELECTION_ID } from "../../constants/election_ID";
+import { ELECTION_ID } from "../../constants/election_id";
 import ElectionData from "../election-data";
 
 const ElectionInfo = () => {
