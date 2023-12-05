@@ -23,3 +23,19 @@ Stack of technologies used:
 - [Tailwind CSS](https://tailwindcss.com/)
 - [Zustand](https://docs.pmnd.rs/zustand/)
 - [React Query](https://tanstack.com/query/v3/docs/react/overview)
+
+### ✨ Local environment set up
+
+```bash
+git clone https://github.com/CarlosEduardoBotero/resium-argentina-election.git
+
+cd resium-argentina-election
+
+npm i
+
+# copy example _.env to .env.local
+cp _.env .env.local
+
+# development
+npm run dev
+```
